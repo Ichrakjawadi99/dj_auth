@@ -21,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'oauth2',
@@ -39,9 +40,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+
+
 
 
 # Application definition
@@ -61,9 +62,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -72,7 +75,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'allauth.account.middleware.AccountMiddleware'
+    
 ]
+
 # Configuration Django Allauth
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -89,8 +94,10 @@ LOGOUT_REDIRECT_URL = '/'
 CSRF_TRUSTED_ORIGINS = [
     
 ]
-# URL de ngrok
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ]
+DEBUG = False
+ALLOWED_HOSTS = ['your-render-app.onrender.com']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 ROOT_URLCONF = 'myprojectt.urls'
 SOCIALACCOUNT_LOGIN_ON_GET = True  # Optionnel : active la redirection immédiate
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"  # Utilise HTTPS pour toutes les redirections
