@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'oauth2',
@@ -93,11 +93,12 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
-CSRF_TRUSTED_ORIGINS = [
-    
-]
+CSRF_TRUSTED_ORIGINS = ['https://dj-auth-hkz3.onrender.com']
+SESSION_COOKIE_DOMAIN = ".onrender.com"  # Pour les environnements de production
+CSRF_COOKIE_DOMAIN = ".onrender.com"  # Pour les environnements de production
+
 DEBUG = False
-ALLOWED_HOSTS = ['your-render-app.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'dj-auth-hkz3.onrender.com']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
